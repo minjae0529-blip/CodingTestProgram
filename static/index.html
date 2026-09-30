@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비트 (BEAT) | 비전공자를 위한 코딩테스트</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .score-badge-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3));
+      border: 1px solid #f59e0b;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #fbbf24;
+      font-weight: 700;
+    }
+    .score-bar-bg {
+      width: 80px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: #f59e0b;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+    .quest-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .quest-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+    .quest-card.done {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+    .stamp-badge {
+      display: inline-block;
+      border: 2px solid #10b981;
+      color: #10b981;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      transform: rotate(-4deg);
+      user-select: none;
+    }
+    .answer-guide-banner {
+      background: linear-gradient(90deg, #1e293b, #0f172a);
+      border-bottom: 2px solid #3b82f6;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .guide-badge {
+      background: #2563eb;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .quick-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0f172a;
+      border: 1px solid #3b82f6;
+      border-radius: 6px;
+      padding: 4px 8px;
+    }
+    .quick-input {
+      background: transparent;
+      border: none;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 220px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Header -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="company-logo">
+        <span>⚡ 비트 (BEAT)</span>
+      </div>
+      <span class="logo-badge">비전공자를 위한 코딩테스트</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-view="onboarding">
+        <span>🎯</span> 비트 문제 (Lv.0 기초)
+      </button>
+      <button class="nav-tab" data-view="ide">
+        <span>💻</span> 비트 IDE (자바 코딩)
+      </button>
+      <button class="nav-tab" data-view="slack">
+        <span>💬</span> 튜터 챗 (1:1 멘토링)
+      </button>
+      <button class="nav-tab" data-view="jira">
+        <span>📋</span> 문제 현황판
+      </button>
+      <button class="nav-tab" data-view="wiki">
+        <span>📖</span> 자바 기초 치트키
+      </button>
+    </nav>
+
+    <!-- Score & Profile -->
+    <div class="user-profile">
+      <div class="score-badge-box">
+        <span>🏆 나의 비트 점수:</span>
+        <span id="headerUserScore">0</span> / 100점
+        <div class="score-bar-bg">
+          <div id="headerScoreBar" class="score-bar-fill"></div>
+        </div>
+        <span id="headerUserGrade" style="font-size: 0.75rem; color: #94a3b8; font-weight: normal;">(비트 입문자 Lv.0)</span>
+      </div>
+
+      <div class="user-badge">
+        <div class="user-avatar" style="background: #2563eb;">비트</div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.82rem;">비트 도전자</div>
+          <div style="font-size: 0.72rem; color: #64748b;">자바 기초 트랙</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Viewport -->
+  <main class="main-viewport">
+
+    <!-- 0. BEAT QUEST ROADMAP VIEW -->
+    <section id="view-onboarding" class="view-section active">
+      <div style="flex: 1; padding: 32px 48px; overflow-y: auto; background: var(--bg-primary);">
+        <div style="max-width: 900px; margin: 0 auto;">
+          <div style="margin-bottom: 24px;">
+            <h1 style="font-size: 1.8rem; color: #60a5fa; margin-bottom: 6px;">🎯 비전공자를 위한 코딩테스트: 비트 (BEAT)</h1>
+            <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">
+              "코딩이 처음이어도 누구나 0단계 기초부터 시작할 수 있습니다!"<br>
+              문제를 풀고 <strong>채점관에게 제출</strong>하여 점수를 쌓고(+20점씩) 100점 만점을 달성해 <strong>비트 마스터</strong>가 되어보세요.
+            </p>
+          </div>
+
+          <div id="questListContainer" style="display: flex; flex-direction: column; gap: 14px;"></div>
+
+          <div style="margin-top: 36px; padding: 20px; background: rgba(30, 41, 59, 0.5); border: 1px dashed #475569; border-radius: 8px;">
+            <div style="font-size: 1rem; font-weight: 700; color: #93c5fd; margin-bottom: 6px;">🚀 비트 Lv.0 수료 후 다음 단계</div>
+            <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">
+              기초 5문제를 모두 통과(100점 달성)하시면 기초 트레이닝을 마스터하게 되며, 실무 응용 과제([NEXTPAY-101] 정밀 수수료 계산기)에 도전하실 수 있습니다!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. IDE VIEW -->
+    <section id="view-ide" class="view-section">
+      <div class="ide-layout">
+        <aside class="file-sidebar">
+          <div class="sidebar-header">
+            <span>📦 자바 문제 파일</span>
+            <button id="btnRefreshFiles" class="btn" style="padding: 2px 6px; font-size: 0.7rem;">새로고침</button>
+          </div>
+          <div id="fileTreeContainer" class="file-tree-container"></div>
+        </aside>
+
+        <div class="editor-main">
+          <!-- Toolbar -->
+          <div class="editor-toolbar">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <select id="selectTaskDropdown" style="background: var(--bg-tertiary); color: #f59e0b; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-weight: 700; font-size: 0.8rem; outline: none; cursor: pointer;">
+                <option value="STEP-01">[1단계] 비트 시작 인사 (Lv.0)</option>
+                <option value="STEP-02">[2단계] 두 수의 합 (Lv.0)</option>
+                <option value="STEP-03">[3단계] 짝수/홀수 판별 (Lv.0)</option>
+                <option value="STEP-04">[4단계] 성인 인증 조건 (Lv.0)</option>
+                <option value="STEP-05">[5단계] 10% 할인 계산 (Lv.0)</option>
+                <option value="NEXTPAY-101">[실무 응용] 정밀 결제 수수료</option>
+              </select>
+              <span id="ideActiveFilePath" class="active-file-path">Step01Welcome.java</span>
+            </div>
+
+            <div class="editor-actions">
+              <button id="btnHint" class="btn btn-warning">
+                <span>💡</span> 멘토 힌트
+              </button>
+              <button id="btnSaveFile" class="btn">
+                <span>💾</span> 저장 (Cmd+S)
+              </button>
+              <button id="btnRunTest" class="btn btn-primary">
+                <span>▶</span> 단위 테스트 실행
+              </button>
+              <button id="btnSubmitTask" class="btn btn-success">
+                <span>📋</span> 채점관에게 제출 & 점수 받기
+              </button>
+            </div>
+          </div>
+
+          <!-- 🎯 눈에 확 띄는 답안 작성 위치 가이드 배너 & 간편 정답 입력기 -->
+          <div class="answer-guide-banner">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="guide-badge">🎯 답 작성 위치</span>
+              <span id="answerLocationText" style="font-size: 0.88rem; color: #f1f5f9; font-weight: 600;">
+                아래 코드 11번째 줄의 큰따옴표("") 사이에 답을 적어주세요!
+              </span>
+            </div>
+
+            <div class="quick-input-bar">
+              <span style="font-size: 0.75rem; color: #94a3b8; font-weight: bold;">간편 정답 입력:</span>
+              <input type="text" id="quickAnswerInput" class="quick-input" placeholder='예: Hello Beat!'>
+              <button id="btnApplyQuickAnswer" class="btn btn-primary" style="padding: 3px 8px; font-size: 0.75rem;">
+                코드에 바로 채우기 ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- Code Editor Area -->
+          <div class="code-editor-wrapper">
+            <div id="lineNumbers" class="line-numbers">1</div>
+            <textarea id="codeEditor" class="code-textarea" spellcheck="false" placeholder="// 코드를 불러오는 중입니다..."></textarea>
+          </div>
+
+          <!-- Bottom Console -->
+          <div class="console-panel">
+            <div class="console-header">
+              <div class="console-tabs">
+                <button class="console-tab active" data-con="terminal">
+                  <span>📟</span> 빌드 & 채점 테스트 콘솔
+                </button>
+                <button class="console-tab" data-con="review">
+                  <span>👨‍💼</span> 채점관 채점 및 피드백 리포트
+                </button>
+              </div>
+              <div>
+                <button id="btnClearConsole" class="btn" style="padding: 2px 8px; font-size: 0.72rem;">지우기</button>
+              </div>
+            </div>
+            <div id="consoleTerminal" class="console-content">
+[비트 환경 준비 완료]
+상단에서 코드를 작성하고 [▶ 단위 테스트 실행]을 눌러보세요.
+테스트가 [PASS]되면 [📋 채점관에게 제출 & 점수 받기]를 눌러 점수를 적립하세요!
+            </div>
+            <div id="consoleReview" class="console-content" style="display: none;">
+아직 채점관에게 제출된 과제가 없습니다.
+코드를 작성하고 상단 [📋 채점관에게 제출 & 점수 받기] 버튼을 누르시면 채점 리포트가 여기에 표시됩니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TUTOR CHAT VIEW -->
+    <section id="view-slack" class="view-section">
+      <div class="slack-layout">
+        <aside class="slack-sidebar">
+          <div style="padding: 16px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px;">
+            <span>💬 비트 튜터 챗</span>
+            <span style="font-size: 0.7rem; color: #10b981;">● Online</span>
+          </div>
+          <div class="channel-list">
+            <div style="font-size: 0.72rem; color: var(--text-muted); padding: 8px 10px; font-weight: 700;">채점관 / 멘토</div>
+            <div class="channel-item active" data-chat-target="mentor">
+              <span>#</span> 김민우-멘토-코딩튜터
+            </div>
+            <div class="channel-item" data-chat-target="po">
+              <span>#</span> 이지은-출제위원-문제문의
+            </div>
+            <div class="channel-item" data-chat-target="lead">
+              <span>#</span> 박수현-수석평가위원장
+            </div>
+          </div>
+        </aside>
+
+        <div class="slack-chat-area">
+          <div class="chat-header">
+            <div>
+              <div id="chatTargetName" style="font-weight: 700; font-size: 1rem;">김민우 멘토 (비트 코딩 튜터)</div>
+              <div id="chatTargetStatus" style="font-size: 0.75rem; color: #10b981;">온라인 (언제든 질문하세요!)</div>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">
+              Tip: "1단계 힌트 줘", "더하기 어떻게 해?", "짝수 홀수 조건문 알려줘" 등을 물어보세요!
+            </div>
+          </div>
+
+          <div id="chatMessages" class="chat-messages">
+            <div class="msg-item">
+              <div class="msg-avatar">👨‍💻</div>
+              <div class="msg-body">
+                <div class="msg-sender">김민우 멘토 • 방금 전</div>
+                <div class="msg-bubble">도전자님, 비전공자를 위한 코딩테스트 '비트(BEAT)'에 오신 것을 환영합니다! 🎉
+0단계 기초 문제부터 한 문제씩 풀면서 점수를 쌓으시면 됩니다.
+에디터 화면 상단에 **[🎯 답 작성 위치]** 배너와 **[간편 정답 입력기]**를 만들어두었으니 어디에 답을 써야 할지 바로 확인하실 수 있어요!
+궁금한 점이 있으면 이 튜터 챗으로 편하게 질문해주세요 👍</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-bar">
+            <input type="text" id="chatInput" class="chat-input" placeholder="멘토에게 질문을 입력하세요... (Enter 키로 전송)">
+            <button id="btnSendChat" class="btn btn-primary">전송</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PROGRESS BOARD VIEW -->
+    <section id="view-jira" class="view-section">
+      <div class="jira-layout">
+        <div class="jira-header">
+          <div class="jira-title">
+            <span>📋 비트 코딩테스트 문제 현황판</span>
+            <span style="font-size: 0.8rem; background: #2563eb; color: white; padding: 2px 8px; border-radius: 4px;">Lv.0 기초 트랙</span>
+          </div>
+          <div class="jira-subtitle">
+            0단계 기초 과제와 심화 과제들의 실시간 채점 진행 상태입니다.
+          </div>
+        </div>
+
+        <div class="kanban-board">
+          <div class="kanban-col">
+            <div class="col-header">
+              <span>도전 대기 (TO DO)</span>
+              <span id="countTodo" class="badge">0</span>
+            </div>
+            <div id="colTodo" class="col-cards"></div>
+          </div>
+          <div class="kanban-col">
+            <div class="col-header">
+              <span>풀이 중 (IN PROGRESS)</span>
+              <span id="countInProgress" class="badge">0</span>
+            </div>
+            <div id="colInProgress" class="col-cards"></div>
+          </div>
+          <div class="kanban-col">
+            <div class="col-header">
+              <span>정답 통과 / 점수 획득 (DONE)</span>
+              <span id="countDone" class="badge">0</span>
+            </div>
+            <div id="colDone" class="col-cards"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. WIKI VIEW -->
+    <section id="view-wiki" class="view-section">
+      <div class="wiki-layout">
+        <aside class="wiki-sidebar">
+          <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">비트 학습 자료</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
+            <div style="color: #60a5fa; cursor: pointer; font-weight: 600;">1. 비전공자를 위한 자바 초급 치트키</div>
+            <div style="color: var(--text-secondary); cursor: pointer;">2. 변수와 사칙연산 (+, -, *, /)</div>
+            <div style="color: var(--text-secondary); cursor: pointer;">3. 조건문 (if-else) 사용법</div>
+            <div style="color: var(--text-secondary); cursor: pointer;">4. 비트 점수 및 등급 규정</div>
+          </div>
+        </aside>
+
+        <div class="wiki-content">
+          <h1>📖 비전공자를 위한 비트(BEAT) 자바 기초 핵심 정리</h1>
+          <p>
+            코딩테스트를 처음 접할 때 꼭 알아두어야 하는 3가지 필수 문법입니다!
+          </p>
+
+          <h2>1. return (결과값 돌려주기)</h2>
+          <p>메서드는 답을 구할 때 <code>return</code> 키워드로 반환합니다.</p>
+          <pre><code>// 글자를 돌려줄 때는 큰따옴표("")로 감쌉니다.
+return "Hello Beat!";
+
+// 숫자를 돌려줄 때는 숫자 그대로 씁니다.
+return 100;</code></pre>
+
+          <h2>2. 사칙연산과 나머지</h2>
+          <p>더하기(<code>+</code>), 빼기(<code>-</code>), 곱하기(<code>*</code>), 나누기(<code>/</code>), 그리고 나머지(<code>%</code>) 연산자를 사용합니다.</p>
+          <pre><code>int a = 10;
+int b = 20;
+return a + b; // 30이 반환됨</code></pre>
+
+          <h2>3. 조건문 (if - else)</h2>
+          <p>조건에 따라 다른 답을 낼 때 사용합니다.</p>
+          <pre><code>// 짝수인지 판별하기
+if (num % 2 == 0) {
+    return "Even"; // 2로 나눈 나머지가 0이면 짝수
+} else {
+    return "Odd";  // 그렇지 않으면 홀수
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Submission / Score Result Modal -->
+  <div id="submitResultModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span id="submitModalTitle" style="font-weight: 700; font-size: 1.1rem;">채점 결과 리포트</span>
+        <button id="btnCloseSubmitModal" style="background: none; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="submitModalBanner" style="padding: 14px; border-radius: 6px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+          <div id="submitBannerText"></div>
+          <div id="submitStamp" class="stamp-badge" style="display: none;">채점통과</div>
+        </div>
+        <div id="submitModalSummary" style="font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 16px;"></div>
+        
+        <div style="background: var(--bg-tertiary); padding: 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">채점관</div>
+            <div id="submitReviewer" style="font-weight: 700; font-size: 0.95rem;">김민우 멘토</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">누적 비트 점수</div>
+            <div id="submitTotalScore" style="font-weight: 800; font-size: 1.2rem; color: #fbbf24;">20 / 100점</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">현재 비트 등급</div>
+            <div id="submitGrade" style="font-weight: 700; font-size: 0.95rem; color: #34d399;">비트 입문자 Lv.0</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnNextStep" class="btn btn-primary">다음 문제로 이동하기 ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hint Modal -->
+  <div id="hintModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span style="font-weight: 700;">💡 멘토 코딩 팁 & 정답 가이드</span>
+        <button id="btnCloseHintModal" style="background: none; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <div class="modal-body" id="hintModalBody" style="font-size: 0.9rem; line-height: 1.6;"></div>
+      <div class="modal-footer">
+        <button id="btnApplyHint" class="btn btn-success">💡 정답 코드를 에디터에 자동 채우기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">알림 메시지</div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/editor.js"></script>
+  <script src="/js/messenger.js"></script>
+</body>
+</html>
