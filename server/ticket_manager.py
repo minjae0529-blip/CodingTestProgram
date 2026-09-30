@@ -95,6 +95,23 @@ class TicketManager:
         }
 
         self.pro_tickets = {
+            "USER_MAIN": {
+                "id": "USER_MAIN",
+                "level": "수업 실습",
+                "title": "[수업 실습] User 객체 배열과 남성 유저 필터링 (UserMain.java)",
+                "type": "자바 실습",
+                "priority": "추천 (P1)",
+                "status": "In Progress",
+                "assignee": "도전자 (나)",
+                "reviewer": "김민우 멘토",
+                "points": 30,
+                "description": "Korea-AI-Academy 최신 수업 코드입니다! 30명의 User 객체 배열에서 성별이 'M'인 유저만 새로운 배열에 필터링하여 출력하는 예제입니다.",
+                "guide": "UserMain.java를 열고 상단 [단위 테스트 실행]을 누르면 전체 유저와 남성 필터링 결과가 콘솔에 출력됩니다!",
+                "target_files": [
+                    "src/main/java/com/korai/study/ch05/UserMain.java",
+                    "src/main/java/com/korai/study/ch05/User.java"
+                ]
+            },
             "NEXTPAY-101": {
                 "id": "NEXTPAY-101",
                 "level": "실무 응용",
@@ -199,6 +216,11 @@ class TicketManager:
                     next_id="NEXTPAY-101")
             else:
                 return self._fail_task("박수현 수석 (수석 채점관)", "10% 할인 금액 계산 수식을 다시 확인해주세요. 힌트: price * 90 / 100")
+
+        elif task_id == "USER_MAIN":
+            return self._pass_task("USER_MAIN", 30, "김민우 멘토",
+                "User & UserMain 수업 실습 완료! 객체 배열 생성과 조건 필터링 알고리즘을 성공적으로 실행해보셨습니다. +30점 적립 완료!",
+                next_id=None)
 
         elif task_id == "NEXTPAY-101":
             file_path = os.path.join(self.workspace_root, "src/main/java/com/nextpay/core/fee/PaymentFeeCalculator.java")

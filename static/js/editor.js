@@ -12,6 +12,7 @@ const Editor = {
     "STEP-03": "src/main/java/com/nextpay/onboarding/Step03EvenOdd.java",
     "STEP-04": "src/main/java/com/nextpay/onboarding/Step04AdultCheck.java",
     "STEP-05": "src/main/java/com/nextpay/onboarding/Step05SimpleDiscount.java",
+    "USER_MAIN": "src/main/java/com/korai/study/ch05/UserMain.java",
     "NEXTPAY-101": "src/main/java/com/nextpay/core/fee/PaymentFeeCalculator.java"
   },
 
@@ -129,6 +130,11 @@ public class Step05SimpleDiscount {
     }
 }
 `
+    },
+    "USER_MAIN": {
+      guideText: '수업 예제 코드입니다! 상단 [▶ 단위 테스트 실행]을 누르면 전체 유저와 남성 필터링 결과가 출력됩니다.',
+      placeholder: '실행 버튼을 눌러보세요',
+      quickFill: null
     },
     "NEXTPAY-101": {
       guideText: 'PaymentFeeCalculator.java 파일의 calculateFee 메서드 안을 수정하세요.',
