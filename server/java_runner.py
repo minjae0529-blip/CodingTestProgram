@@ -50,14 +50,6 @@ class JavaRunner:
             target_file = os.path.join(self.workspace_root, "src/main/java/com/nextpay/onboarding/Step05SimpleDiscount.java")
             return self._execute(test_file, [target_file], main_class, simulator_fn=self._sim_step05)
 
-        elif ticket_id == "USER_MAIN":
-            main_class = "com.korai.study.ch05.UserMain"
-            target_files = [
-                os.path.join(self.workspace_root, "src/main/java/com/korai/study/ch05/User.java"),
-                os.path.join(self.workspace_root, "src/main/java/com/korai/study/ch05/UserMain.java")
-            ]
-            return self._execute(None, target_files, main_class, simulator_fn=self._sim_user_main)
-
         elif ticket_id == "NEXTPAY-101":
             main_class = "com.nextpay.core.fee.PaymentFeeCalculatorTest"
             test_file = os.path.join(self.workspace_root, "src/test/java/com/nextpay/core/fee/PaymentFeeCalculatorTest.java")
@@ -215,44 +207,6 @@ class JavaRunner:
 =================================================="""
             return {"success": True, "output": out, "passed": False}
 
-    def _sim_user_main(self):
-        output = """==================================================
-            [UserMain 실행 결과 - 전체 유저]        
-==================================================
-[ 1] 김민준(23, M) 서울 | minjun.kim@example.com | 1,200P | 2021년 가입 | 활성
-[ 2] 이서연(31, F) 부산 | seoyeon.lee@example.com | 5,400P | 2019년 가입 | 활성
-[ 3] 박도윤(19, M) 대구 | doyun.park@example.com | 0P | 2025년 가입 | 활성
-[ 4] 최지우(27, F) 서울 | jiwoo.choi@example.com | 8,700P | 2020년 가입 | 활성
-[ 5] 정하준(45, M) 인천 | hajun.jung@example.com | 300P | 2022년 가입 | 휴면
-[ 6] 강서윤(22, F) 광주 | seoyun.kang@example.com | 2,500P | 2023년 가입 | 활성
-[ 7] 조은우(38, M) 서울 | eunwoo.jo@example.com | 9,800P | 2019년 가입 | 활성
-[ 8] 윤지아(20, F) 대전 | jia.yoon@example.com | 50P | 2026년 가입 | 활성
-[ 9] 장시우(52, M) 부산 | siwoo.jang@example.com | 4,100P | 2020년 가입 | 휴면
-[10] 임하은(29, F) 서울 | haeun.lim@example.com | 3,300P | 2021년 가입 | 활성
-... (총 30명 유저 출력)
-
---------------------------------------------------
-        [남성(gender.equals("M")) 유저 필터링]     
---------------------------------------------------
-[ 1] 김민준(23, M) 서울 | minjun.kim@example.com | 1,200P | 2021년 가입 | 활성
-[ 3] 박도윤(19, M) 대구 | doyun.park@example.com | 0P | 2025년 가입 | 활성
-[ 5] 정하준(45, M) 인천 | hajun.jung@example.com | 300P | 2022년 가입 | 휴면
-[ 7] 조은우(38, M) 서울 | eunwoo.jo@example.com | 9,800P | 2019년 가입 | 활성
-[ 9] 장시우(52, M) 부산 | siwoo.jang@example.com | 4,100P | 2020년 가입 | 휴면
-[11] 한주원(17, M) 인천 | juwon.han@example.com | 700P | 2026년 가입 | 활성
-[13] 서지호(41, M) 광주 | jiho.seo@example.com | 0P | 2024년 가입 | 휴면
-[15] 권유준(63, M) 대전 | yujun.kwon@example.com | 7,500P | 2019년 가입 | 활성
-[17] 안건우(30, M) 서울 | gunwoo.ahn@example.com | 4,800P | 2020년 가입 | 휴면
-[19] 전현우(48, M) 대구 | hyunwoo.jeon@example.com | 5,600P | 2021년 가입 | 활성
-[21] 유준서(35, M) 부산 | junseo.yoo@example.com | 3,900P | 2022년 가입 | 활성
-[23] 문도현(57, M) 서울 | dohyun.moon@example.com | 9,100P | 2019년 가입 | 활성
-[25] 손지훈(28, M) 인천 | jihoon.son@example.com | 1,500P | 2024년 가입 | 활성
-[27] 백승현(20, M) 대구 | seunghyun.baek@example.com | 400P | 2025년 가입 | 활성
-[29] 남태윤(65, M) 광주 | taeyun.nam@example.com | 2,900P | 2022년 가입 | 활성
-
->>> [BUILD SUCCESS] UserMain 실행이 정상적으로 완료되었습니다!
-"""
-        return {"success": True, "output": output, "passed": True}
 
     def _sim_fee(self):
         path = os.path.join(self.workspace_root, "src/main/java/com/nextpay/core/fee/PaymentFeeCalculator.java")
